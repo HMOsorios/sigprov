@@ -19,6 +19,12 @@ $attempts = 0;
 while ($attempts < 30) {
     try {
         $pdo = new PDO("mysql:host={$host};port={$port}", $user, $pass, [PDO::ATTR_TIMEOUT => 5]);
+
+        if (getenv("DB_RESET_SCHEMA")) {
+            $pdo->exec("DROP DATABASE IF EXISTS `{$db}`");
+            echo "Database `{$db}` dropped for reset\n";
+        }
+
         $pdo->exec("CREATE DATABASE IF NOT EXISTS `{$db}` CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci");
         echo "Database `{$db}` ready\n";
 
