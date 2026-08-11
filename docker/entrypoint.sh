@@ -24,7 +24,7 @@ while ($attempts < 30) {
 
         $grantUser = getenv("DB_GRANT_USER");
         if ($grantUser) {
-            $pdo->exec("GRANT ALL PRIVILEGES ON `{$db}`.* TO '{$grantUser}'@'%'");
+            $pdo->exec("GRANT ALL PRIVILEGES ON `{$db}`.* TO `{$grantUser}`@`%`");
             $pdo->exec("FLUSH PRIVILEGES");
             echo "Granted `{$db}` to `{$grantUser}`\n";
         }
