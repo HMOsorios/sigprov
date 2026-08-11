@@ -12,7 +12,7 @@ RUN npm run build
 FROM composer:2 AS vendor
 WORKDIR /app
 COPY composer.json composer.lock ./
-RUN composer install \
+RUN composer update \
     --no-dev \
     --no-scripts \
     --no-interaction \
