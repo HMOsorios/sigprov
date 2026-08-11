@@ -21,6 +21,14 @@ while ($attempts < 30) {
         $pdo = new PDO("mysql:host={$host};port={$port}", $user, $pass, [PDO::ATTR_TIMEOUT => 5]);
         $pdo->exec("CREATE DATABASE IF NOT EXISTS `{$db}` CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci");
         echo "Database `{$db}` ready\n";
+
+        $grantUser = getenv("DB_GRANT_USER");
+        if ($grantUser) {
+            $pdo->exec("GRANT ALL PRIVILEGES ON `{$db}`.* TO '{$grantUser}'@'%'");
+            $pdo->exec("FLUSH PRIVILEGES");
+            echo "Granted `{$db}` to `{$grantUser}`\n";
+        }
+
         exit(0);
     } catch (PDOException $e) {
         $attempts++;
