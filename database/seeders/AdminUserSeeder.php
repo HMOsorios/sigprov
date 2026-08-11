@@ -11,12 +11,15 @@ class AdminUserSeeder extends Seeder
 {
     public function run(): void
     {
+        $devEmail = env('ADMIN_EMAIL', 'developer@sisprov.com.br');
+        $devPassword = env('ADMIN_PASSWORD', 'dev123');
+
         $devRole = Role::where('name', 'developer')->first();
-        if ($devRole && !User::where('email', 'developer@sisprov.com.br')->exists()) {
+        if ($devRole && !User::where('email', $devEmail)->exists()) {
             User::create([
                 'name' => 'Developer',
-                'email' => 'developer@sisprov.com.br',
-                'password' => Hash::make('dev123'),
+                'email' => $devEmail,
+                'password' => Hash::make($devPassword),
                 'role_id' => $devRole->id,
                 'is_active' => true,
             ]);
