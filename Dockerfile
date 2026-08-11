@@ -59,10 +59,10 @@ RUN cp docker/php.ini /usr/local/etc/php/conf.d/zz-app.ini \
     && chown -R www-data:www-data storage bootstrap/cache \
     && rm -rf .git tests
 
-EXPOSE 8080
+EXPOSE 80
 
 HEALTHCHECK --interval=30s --timeout=5s --start-period=30s --retries=3 \
-    CMD curl -fsS http://127.0.0.1:8080/up || exit 1
+    CMD curl -fsS http://127.0.0.1:80/up || exit 1
 
 ENTRYPOINT ["docker/entrypoint.sh"]
 CMD ["/usr/bin/supervisord", "-c", "/etc/supervisor/conf.d/supervisord.conf"]
