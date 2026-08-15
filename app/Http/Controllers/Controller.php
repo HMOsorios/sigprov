@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
-abstract class Controller
+use Illuminate\Routing\Controller as BaseController;
+
+abstract class Controller extends BaseController
 {
     protected function success(string $message, array $data = [], int $status = 200)
     {
