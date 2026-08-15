@@ -52,7 +52,7 @@
         </div>
     </div>
 
-    <form method="POST" action="{{ route('admin.leads.bulk-status') }}" id="bulkForm">
+    <form method="POST" action="{{ route('admin.leads.bulk-update-status') }}" id="bulkForm">
         @csrf
         <div class="px-5 py-3 border-b bg-gray-50 flex items-center gap-3">
             <span class="text-sm text-gray-600">Ações em massa:</span>

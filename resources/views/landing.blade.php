@@ -35,7 +35,6 @@
                 <a href="#funcionalidades" class="nav-link hover:text-primary-600 transition" data-section="funcionalidades">Funcionalidades</a>
                 <a href="#modulos" class="nav-link hover:text-primary-600 transition" data-section="modulos">Módulos</a>
                 <a href="#vantagens" class="nav-link hover:text-primary-600 transition" data-section="vantagens">Vantagens</a>
-                <a href="#planos" class="nav-link hover:text-primary-600 transition" data-section="planos">Planos</a>
                 <a href="#contato" class="nav-link hover:text-primary-600 transition" data-section="contato">Contato</a>
             </nav>
             <div class="flex items-center gap-3">
@@ -243,82 +242,6 @@
     </div>
 </section>
 
-<section id="planos" class="py-20 sm:py-28 bg-white">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="text-center max-w-3xl mx-auto mb-16">
-            <span class="text-primary-600 font-semibold text-sm uppercase tracking-widest">Planos</span>
-            <h2 class="text-3xl sm:text-4xl font-extrabold text-gray-900 mt-3 mb-4">Invista no crescimento do seu provedor</h2>
-            <p class="text-lg text-gray-500">Escolha o plano ideal para o porte do seu ISP. Todos incluem atualizações e suporte.</p>
-        </div>
-        <div class="grid md:grid-cols-3 gap-8 max-w-5xl mx-auto">
-            <div class="border border-gray-200 rounded-2xl p-8 hover:shadow-lg transition-all flex flex-col">
-                <div class="mb-6">
-                    <h3 class="text-lg font-bold text-gray-900">Starter</h3>
-                    <p class="text-sm text-gray-500 mt-1">Para pequenos provedores</p>
-                    <div class="mt-4">
-                        <span class="text-4xl font-extrabold text-gray-900">R$ 97</span>
-                        <span class="text-gray-500 text-sm">/mês</span>
-                    </div>
-                </div>
-                <ul class="space-y-3 text-sm text-gray-600 flex-1 mb-8">
-                    <li class="flex items-start gap-2">✅ Até 500 clientes</li>
-                    <li class="flex items-start gap-2">✅ Gestão financeira</li>
-                    <li class="flex items-start gap-2">✅ CRM e chamados</li>
-                    <li class="flex items-start gap-2">✅ Relatórios básicos</li>
-                    <li class="flex items-start gap-2">✅ Suporte por e-mail</li>
-                    <li class="flex items-start gap-2 text-gray-300">❌ Gestão de rede</li>
-                    <li class="flex items-start gap-2 text-gray-300">❌ Ordem de serviço</li>
-                    <li class="flex items-start gap-2 text-gray-300">❌ App técnico</li>
-                </ul>
-                <a href="#contato" class="block text-center border-2 border-primary-600 text-primary-600 font-semibold py-3 rounded-xl hover:bg-primary-50 transition">Contratar</a>
-            </div>
-            <div class="gradient-card rounded-2xl p-8 shadow-xl shadow-blue-200 relative flex flex-col text-white">
-                <div class="absolute top-0 right-8 bg-amber-400 text-amber-900 text-xs font-bold px-3 py-1 rounded-b-lg">Mais popular</div>
-                <div class="mb-6">
-                    <h3 class="text-lg font-bold">Profissional</h3>
-                    <p class="text-sm text-blue-100/80 mt-1">Para provedores em crescimento</p>
-                    <div class="mt-4">
-                        <span class="text-4xl font-extrabold">R$ 197</span>
-                        <span class="text-blue-100/80 text-sm">/mês</span>
-                    </div>
-                </div>
-                <ul class="space-y-3 text-sm text-blue-100 flex-1 mb-8">
-                    <li class="flex items-start gap-2">✅ Até 2.000 clientes</li>
-                    <li class="flex items-start gap-2">✅ Gestão financeira</li>
-                    <li class="flex items-start gap-2">✅ CRM e chamados</li>
-                    <li class="flex items-start gap-2">✅ Relatórios completos</li>
-                    <li class="flex items-start gap-2">✅ Suporte prioritário</li>
-                    <li class="flex items-start gap-2">✅ Gestão de rede + pools IP</li>
-                    <li class="flex items-start gap-2">✅ Ordem de serviço</li>
-                    <li class="flex items-start gap-2 text-blue-100/40">❌ App técnico</li>
-                </ul>
-                <a href="#contato" class="block text-center bg-white text-primary-700 font-semibold py-3 rounded-xl hover:bg-gray-50 transition shadow-lg">Contratar</a>
-            </div>
-            <div class="border border-gray-200 rounded-2xl p-8 hover:shadow-lg transition-all flex flex-col">
-                <div class="mb-6">
-                    <h3 class="text-lg font-bold text-gray-900">Enterprise</h3>
-                    <p class="text-sm text-gray-500 mt-1">Para provedores de grande porte</p>
-                    <div class="mt-4">
-                        <span class="text-4xl font-extrabold text-gray-900">R$ 397</span>
-                        <span class="text-gray-500 text-sm">/mês</span>
-                    </div>
-                </div>
-                <ul class="space-y-3 text-sm text-gray-600 flex-1 mb-8">
-                    <li class="flex items-start gap-2">✅ Clientes ilimitados</li>
-                    <li class="flex items-start gap-2">✅ Todos os módulos</li>
-                    <li class="flex items-start gap-2">✅ App técnico offline</li>
-                    <li class="flex items-start gap-2">✅ Suporte 24/7 via WhatsApp</li>
-                    <li class="flex items-start gap-2">✅ On-premise disponível</li>
-                    <li class="flex items-start gap-2">✅ Treinamento da equipe</li>
-                    <li class="flex items-start gap-2">✅ Personalizações</li>
-                    <li class="flex items-start gap-2">✅ SLA garantido</li>
-                </ul>
-                <a href="#contato" class="block text-center border-2 border-primary-600 text-primary-600 font-semibold py-3 rounded-xl hover:bg-primary-50 transition">Falar com Vendas</a>
-            </div>
-        </div>
-    </div>
-</section>
-
 <section id="contato" class="py-20 sm:py-28 bg-gray-50">
     <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="text-center max-w-2xl mx-auto mb-12">
@@ -384,7 +307,6 @@
                 <ul class="space-y-2 text-sm">
                     <li><a href="#funcionalidades" class="hover:text-white transition">Funcionalidades</a></li>
                     <li><a href="#modulos" class="hover:text-white transition">Módulos</a></li>
-                    <li><a href="#planos" class="hover:text-white transition">Planos</a></li>
                 </ul>
             </div>
             <div>

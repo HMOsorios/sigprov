@@ -32,5 +32,8 @@
         Ainda não tem conta?
         <a href="{{ route('register') }}" class="text-primary-600 hover:text-primary-800 font-medium">Cadastre-se</a>
     </p>
+    <p class="mt-3 text-center text-sm">
+        <a href="{{ url('/') }}" class="text-gray-500 hover:text-gray-700">&larr; Voltar para a página inicial</a>
+    </p>
 </div>
 @endsection

@@ -39,8 +39,8 @@ Route::middleware(['auth', 'role:developer,admin,technician,administrativo'])->p
     Route::post('contracts/{contract}/mark-signed', [ContractController::class, 'markSigned'])->name('contracts.mark-signed');
     Route::get('contracts/{contract}/calculate-fine', [ContractController::class, 'calculateFine'])->name('contracts.calculate-fine');
 
-    Route::resource('leads', LeadController::class);
     Route::get('leads/kanban', [LeadController::class, 'kanban'])->name('leads.kanban');
+    Route::resource('leads', LeadController::class);
     Route::get('leads/{lead}/convert', [LeadController::class, 'convert'])->name('leads.convert');
     Route::post('leads/{lead}/convert', [LeadController::class, 'doConvert'])->name('leads.do-convert');
     Route::post('leads/{lead}/update-status', [LeadController::class, 'updateStatus'])->name('leads.update-status');
