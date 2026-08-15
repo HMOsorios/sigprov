@@ -20,6 +20,11 @@ class UserController extends Controller
     {
         $query = User::with('role');
 
+        if (!auth()->user()->isDeveloper()) {
+            $query->where('created_by', auth()->id())
+                ->whereHas('role', fn ($q) => $q->whereIn('name', ['technician', 'administrativo']));
+        }
+
         if ($search = $request->get('search')) {
             $query->where(function ($q) use ($search) {
                 $q->where('name', 'like', "%{$search}%")
@@ -32,14 +37,14 @@ class UserController extends Controller
         }
 
         $users = $query->orderBy('created_at', 'desc')->paginate(15);
-        $roles = Role::all();
+        $roles = $this->assignableRoles();
 
         return view('admin.users.index', compact('users', 'roles'));
     }
 
     public function create(): View
     {
-        $roles = Role::all();
+        $roles = $this->assignableRoles();
         return view('admin.users.form', compact('roles'));
     }
 
@@ -55,8 +60,11 @@ class UserController extends Controller
             'is_active' => ['boolean'],
         ]);
 
+        abort_unless($this->assignableRoles()->pluck('id')->contains((int) $validated['role_id']), 403);
+
         $validated['password'] = Hash::make($validated['password']);
         $validated['is_active'] = $request->boolean('is_active', true);
+        $validated['created_by'] = auth()->id();
 
         $user = User::create($validated);
 
@@ -67,12 +75,16 @@ class UserController extends Controller
 
     public function edit(User $user): View
     {
-        $roles = Role::all();
+        abort_unless($this->canManage($user), 403);
+
+        $roles = $this->assignableRoles();
         return view('admin.users.form', compact('user', 'roles'));
     }
 
     public function update(Request $request, User $user): RedirectResponse
     {
+        abort_unless($this->canManage($user), 403);
+
         $validated = $request->validate([
             'name' => ['required', 'string', 'max:100'],
             'email' => ['required', 'string', 'email', 'max:150', 'unique:users,email,' . $user->id],
@@ -82,6 +94,8 @@ class UserController extends Controller
             'is_active' => ['boolean'],
             'password' => ['nullable', Rules\Password::defaults()],
         ]);
+
+        abort_unless($this->assignableRoles()->pluck('id')->contains((int) $validated['role_id']), 403);
 
         $validated['is_active'] = $request->boolean('is_active', true);
 
@@ -101,6 +115,8 @@ class UserController extends Controller
 
     public function destroy(User $user): RedirectResponse
     {
+        abort_unless($this->canManage($user), 403);
+
         if ($user->isAdmin() && User::where('role_id', $user->role_id)->count() <= 1) {
             return $this->error('Não é possível excluir o único administrador.');
         }
@@ -113,5 +129,24 @@ class UserController extends Controller
         $user->delete();
 
         return $this->redirectWith('admin.users.index', 'Usuário excluído!');
+    }
+
+    private function canManage(User $user): bool
+    {
+        if (auth()->user()->isDeveloper()) {
+            return true;
+        }
+
+        return $user->created_by === auth()->id()
+            && in_array($user->role?->name, ['technician', 'administrativo']);
+    }
+
+    private function assignableRoles()
+    {
+        if (auth()->user()->isDeveloper()) {
+            return Role::all();
+        }
+
+        return Role::whereIn('name', ['technician', 'administrativo'])->get();
     }
 }

@@ -16,7 +16,7 @@
                 <span class="absolute -top-1 -right-1 bg-red-500 text-white text-xs rounded-full h-4 w-4 flex items-center justify-center">{{ $unreadNotifications > 9 ? '9+' : $unreadNotifications }}</span>
             @endif
         </a>
-        <div class="flex items-center gap-2 text-sm">
+        <a href="{{ route('admin.profile.edit') }}" class="flex items-center gap-2 text-sm hover:opacity-80 transition" title="Meu Perfil">
             <div class="w-8 h-8 rounded-full bg-primary-100 text-primary-700 flex items-center justify-center font-bold text-sm">
                 {{ substr(auth()->user()->name, 0, 2) }}
             </div>
@@ -24,6 +24,6 @@
                 <p class="font-medium text-gray-700">{{ auth()->user()->name }}</p>
                 <p class="text-xs text-gray-500">{{ auth()->user()->role?->label }}</p>
             </div>
-        </div>
+        </a>
     </div>
 </header>

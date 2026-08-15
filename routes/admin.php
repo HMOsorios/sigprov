@@ -12,6 +12,7 @@ use App\Http\Controllers\Admin\LinkController;
 use App\Http\Controllers\Admin\NetworkElementController;
 use App\Http\Controllers\Admin\NFController;
 use App\Http\Controllers\Admin\PlanController;
+use App\Http\Controllers\Admin\ProfileController;
 use App\Http\Controllers\Admin\ReportController;
 use App\Http\Controllers\Admin\ServerController;
 use App\Http\Controllers\Admin\SettingController;
@@ -25,6 +26,9 @@ use Illuminate\Support\Facades\Route;
 
 Route::middleware(['auth', 'role:developer,admin,technician,administrativo'])->prefix('admin')->name('admin.')->group(function () {
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+
+    Route::get('profile', [ProfileController::class, 'edit'])->name('profile.edit');
+    Route::put('profile', [ProfileController::class, 'update'])->name('profile.update');
 
     Route::resource('clients', ClientController::class);
     Route::post('clients/{client}/block', [ClientController::class, 'block'])->name('clients.block');

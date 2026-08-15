@@ -14,7 +14,7 @@ class User extends Authenticatable
     protected $fillable = [
         'name', 'email', 'password', 'cpf_cnpj', 'phone', 'avatar',
         'is_active', 'two_factor_enabled', 'two_factor_secret',
-        'two_factor_recovery_codes', 'role_id',
+        'two_factor_recovery_codes', 'role_id', 'created_by',
     ];
 
     protected $hidden = [
