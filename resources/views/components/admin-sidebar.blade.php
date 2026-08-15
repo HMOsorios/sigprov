@@ -13,17 +13,17 @@ $navItems = [
         ['name' => 'links', 'label' => 'Links', 'icon' => '🔗', 'route' => 'admin.links.index', 'roles' => ['developer', 'admin', 'technician']],
     ],
     'Financeiro' => [
-        ['name' => 'invoices', 'label' => 'Faturas', 'icon' => '💰', 'route' => 'admin.invoices.index'],
+        ['name' => 'invoices', 'label' => 'Faturas', 'icon' => '💰', 'route' => 'admin.invoices.index', 'roles' => ['developer', 'admin', 'administrativo']],
     ],
     'Suporte' => [
         ['name' => 'tickets', 'label' => 'Chamados', 'icon' => '🎫', 'route' => 'admin.tickets.index'],
     ],
     'Relatórios' => [
-        ['name' => 'reports', 'label' => 'Relatórios', 'icon' => '📈', 'route' => 'admin.reports.index'],
+        ['name' => 'reports', 'label' => 'Relatórios', 'icon' => '📈', 'route' => 'admin.reports.index', 'roles' => ['developer', 'admin', 'administrativo']],
     ],
     'Sistema' => [
         ['name' => 'users', 'label' => 'Usuários', 'icon' => '🔐', 'route' => 'admin.users.index', 'roles' => ['developer', 'admin']],
-        ['name' => 'settings', 'label' => 'Configurações', 'icon' => '⚙️', 'route' => 'admin.settings.index'],
+        ['name' => 'settings', 'label' => 'Configurações', 'icon' => '⚙️', 'route' => 'admin.settings.index', 'roles' => ['developer', 'admin']],
     ],
 ];
 @endphp
@@ -42,16 +42,17 @@ $navItems = [
 
         @foreach($navItems as $group => $items)
             @if(is_array($items) && !isset($items['name']))
+                @php
+                    $visibleItems = array_filter($items, function ($item) {
+                        $requiredRoles = $item['roles'] ?? ($item['role'] ?? null);
+                        return !$requiredRoles || auth()->user()->hasRole($requiredRoles);
+                    });
+                @endphp
+                @continue(empty($visibleItems))
                 <div class="pt-3 pb-1">
                     <p class="px-3 text-xs font-semibold text-slate-500 uppercase tracking-wider">{{ $group }}</p>
                 </div>
-                @foreach($items as $item)
-                    @php
-                        $requiredRoles = $item['roles'] ?? ($item['role'] ?? null);
-                    @endphp
-                    @if($requiredRoles && !auth()->user()->hasRole($requiredRoles))
-                        @continue
-                    @endif
+                @foreach($visibleItems as $item)
                     <a href="{{ route($item['route']) }}"
                        class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm transition {{ str_starts_with($currentRoute, 'admin.' . $item['name']) ? 'bg-primary-600 text-white' : 'text-slate-300 hover:bg-slate-700 hover:text-white' }}">
                         <span>{{ $item['icon'] }}</span> {{ $item['label'] }}

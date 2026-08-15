@@ -7,7 +7,9 @@
 <div class="bg-white rounded-lg shadow-sm overflow-hidden">
     <div class="p-5 border-b flex items-center justify-between">
         <p class="text-sm text-gray-600">Total: {{ $plans->total() }} planos</p>
+        @if(auth()->user()->hasRole(['developer', 'admin', 'administrativo']))
         <a href="{{ route('admin.plans.create') }}" class="bg-primary-600 text-white px-4 py-2 rounded text-sm hover:bg-primary-700">Novo Plano</a>
+        @endif
     </div>
     <div class="overflow-x-auto">
         <table class="w-full text-sm">
@@ -38,11 +40,15 @@
                         </td>
                         <td class="p-3">{{ $plan->order ?? '-' }}</td>
                         <td class="p-3 text-right">
+                            @if(auth()->user()->hasRole(['developer', 'admin', 'administrativo']))
                             <a href="{{ route('admin.plans.edit', $plan) }}" class="text-primary-600 hover:text-primary-800 mr-2">Editar</a>
                             <form method="POST" action="{{ route('admin.plans.destroy', $plan) }}" class="inline" onsubmit="return confirm('Excluir este plano?')">
                                 @csrf @method('DELETE')
                                 <button type="submit" class="text-red-600 hover:text-red-800">Excluir</button>
                             </form>
+                            @else
+                            <span class="text-gray-400 text-xs">Somente leitura</span>
+                            @endif
                         </td>
                     </tr>
                 @empty

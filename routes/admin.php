@@ -34,7 +34,10 @@ Route::middleware(['auth', 'role:developer,admin,technician,administrativo'])->p
     Route::post('clients/{client}/block', [ClientController::class, 'block'])->name('clients.block');
     Route::post('clients/{client}/unblock', [ClientController::class, 'unblock'])->name('clients.unblock');
 
-    Route::resource('plans', PlanController::class);
+    Route::resource('plans', PlanController::class)->only(['index']);
+    Route::middleware('role:developer,admin,administrativo')->group(function () {
+        Route::resource('plans', PlanController::class)->except(['index']);
+    });
 
     Route::resource('contracts', ContractController::class);
     Route::post('contracts/{contract}/suspend', [ContractController::class, 'suspend'])->name('contracts.suspend');
@@ -59,14 +62,16 @@ Route::middleware(['auth', 'role:developer,admin,technician,administrativo'])->p
         Route::post('links/{link}/unblock', [LinkController::class, 'unblock'])->name('links.unblock');
     });
 
-    Route::resource('invoices', InvoiceController::class);
-    Route::post('invoices/{invoice}/pay', [InvoiceController::class, 'markAsPaid'])->name('invoices.pay');
-    Route::post('invoices/{invoice}/emitir-nf', [NFController::class, 'emitir'])->name('invoices.emitir-nf');
+    Route::middleware('role:developer,admin,administrativo')->group(function () {
+        Route::resource('invoices', InvoiceController::class);
+        Route::post('invoices/{invoice}/pay', [InvoiceController::class, 'markAsPaid'])->name('invoices.pay');
+        Route::post('invoices/{invoice}/emitir-nf', [NFController::class, 'emitir'])->name('invoices.emitir-nf');
 
-    Route::get('nf', [NFController::class, 'index'])->name('nf.index');
-    Route::get('nf/{nf}', [NFController::class, 'show'])->name('nf.show');
-    Route::post('nf/{nf}/cancelar', [NFController::class, 'cancelar'])->name('nf.cancelar');
-    Route::post('nf/{nf}/consultar', [NFController::class, 'consultar'])->name('nf.consultar');
+        Route::get('nf', [NFController::class, 'index'])->name('nf.index');
+        Route::get('nf/{nf}', [NFController::class, 'show'])->name('nf.show');
+        Route::post('nf/{nf}/cancelar', [NFController::class, 'cancelar'])->name('nf.cancelar');
+        Route::post('nf/{nf}/consultar', [NFController::class, 'consultar'])->name('nf.consultar');
+    });
 
     Route::middleware('role:developer,admin,technician')->group(function () {
         Route::resource('equipment', EquipmentController::class);
@@ -123,29 +128,34 @@ Route::middleware(['auth', 'role:developer,admin,technician,administrativo'])->p
 
     Route::get('dashboard/executive', [DashboardController::class, 'executive'])->name('dashboard.executive');
 
-    Route::get('reports', [ReportController::class, 'index'])->name('reports.index');
-    Route::get('reports/financial', [ReportController::class, 'financial'])->name('reports.financial');
-    Route::get('reports/clients', [ReportController::class, 'clients'])->name('reports.clients');
-    Route::get('reports/tickets', [ReportController::class, 'tickets'])->name('reports.tickets');
-    Route::get('reports/churn', [ReportController::class, 'churn'])->name('reports.churn');
-    Route::get('reports/cac', [ReportController::class, 'cac'])->name('reports.cac');
-    Route::get('reports/delinquency', [ReportController::class, 'delinquency'])->name('reports.delinquency');
-    Route::get('reports/budget', [ReportController::class, 'budget'])->name('reports.budget');
-    Route::get('reports/collection', [ReportController::class, 'collection'])->name('reports.collection');
-    Route::get('reports/sla', [ReportController::class, 'sla'])->name('reports.sla');
-    Route::get('reports/nps', [ReportController::class, 'nps'])->name('reports.nps');
+    Route::middleware('role:developer,admin,administrativo')->group(function () {
+        Route::get('reports', [ReportController::class, 'index'])->name('reports.index');
+        Route::get('reports/financial', [ReportController::class, 'financial'])->name('reports.financial');
+        Route::get('reports/clients', [ReportController::class, 'clients'])->name('reports.clients');
+        Route::get('reports/tickets', [ReportController::class, 'tickets'])->name('reports.tickets');
+        Route::get('reports/churn', [ReportController::class, 'churn'])->name('reports.churn');
+        Route::get('reports/cac', [ReportController::class, 'cac'])->name('reports.cac');
+        Route::get('reports/delinquency', [ReportController::class, 'delinquency'])->name('reports.delinquency');
+        Route::get('reports/budget', [ReportController::class, 'budget'])->name('reports.budget');
+        Route::get('reports/collection', [ReportController::class, 'collection'])->name('reports.collection');
+        Route::get('reports/sla', [ReportController::class, 'sla'])->name('reports.sla');
+        Route::get('reports/nps', [ReportController::class, 'nps'])->name('reports.nps');
 
-    Route::get('reports/export/invoices', [ReportController::class, 'exportInvoices'])->name('reports.export.invoices');
-    Route::get('reports/export/clients', [ReportController::class, 'exportClients'])->name('reports.export.clients');
-    Route::get('reports/export/tickets', [ReportController::class, 'exportTickets'])->name('reports.export.tickets');
-    Route::get('reports/export/financial', [ReportController::class, 'exportFinancial'])->name('reports.export.financial');
+        Route::get('reports/export/invoices', [ReportController::class, 'exportInvoices'])->name('reports.export.invoices');
+        Route::get('reports/export/clients', [ReportController::class, 'exportClients'])->name('reports.export.clients');
+        Route::get('reports/export/tickets', [ReportController::class, 'exportTickets'])->name('reports.export.tickets');
+        Route::get('reports/export/financial', [ReportController::class, 'exportFinancial'])->name('reports.export.financial');
+    });
 
-    Route::get('settings', [SettingController::class, 'index'])->name('settings.index');
-    Route::get('settings/system', [SettingController::class, 'system'])->name('settings.system');
-    Route::get('settings/audit', [SettingController::class, 'audit'])->name('settings.audit');
     Route::get('settings/notifications', [SettingController::class, 'notifications'])->name('settings.notifications');
     Route::post('settings/notifications/{notification}/read', [SettingController::class, 'markNotification'])->name('settings.notifications.read');
     Route::post('settings/notifications/read-all', [SettingController::class, 'markAllNotifications'])->name('settings.notifications.read-all');
-    Route::post('settings/clear-cache', [SettingController::class, 'clearCache'])->name('settings.clear-cache');
-    Route::post('settings/update', [SettingController::class, 'update'])->name('settings.update');
+
+    Route::middleware('role:developer,admin')->group(function () {
+        Route::get('settings', [SettingController::class, 'index'])->name('settings.index');
+        Route::get('settings/system', [SettingController::class, 'system'])->name('settings.system');
+        Route::get('settings/audit', [SettingController::class, 'audit'])->name('settings.audit');
+        Route::post('settings/clear-cache', [SettingController::class, 'clearCache'])->name('settings.clear-cache');
+        Route::post('settings/update', [SettingController::class, 'update'])->name('settings.update');
+    });
 });
