@@ -10,11 +10,11 @@ class RolePermissionSeeder extends Seeder
 {
     public function run(): void
     {
-        $developer = Role::create(['name' => 'developer', 'label' => 'Developer', 'description' => 'Acesso irrestrito total para manutenção e desenvolvimento', 'is_locked' => true]);
-        $admin = Role::create(['name' => 'admin', 'label' => 'Administrador', 'description' => 'Administrador do sistema como cliente', 'is_locked' => true]);
-        $technician = Role::create(['name' => 'technician', 'label' => 'Técnico', 'description' => 'Acesso a recursos técnicos e manutenção', 'is_locked' => true]);
-        $administrativo = Role::create(['name' => 'administrativo', 'label' => 'Administrativo', 'description' => 'Acesso a serviços administrativos e financeiros', 'is_locked' => true]);
-        $client = Role::create(['name' => 'client', 'label' => 'Cliente', 'description' => 'Acesso aos serviços contratados', 'is_locked' => true]);
+        $developer = Role::firstOrCreate(['name' => 'developer'], ['label' => 'Developer', 'description' => 'Acesso irrestrito total para manutenção e desenvolvimento', 'is_locked' => true]);
+        $admin = Role::firstOrCreate(['name' => 'admin'], ['label' => 'Administrador', 'description' => 'Administrador do sistema como cliente', 'is_locked' => true]);
+        $technician = Role::firstOrCreate(['name' => 'technician'], ['label' => 'Técnico', 'description' => 'Acesso a recursos técnicos e manutenção', 'is_locked' => true]);
+        $administrativo = Role::firstOrCreate(['name' => 'administrativo'], ['label' => 'Administrativo', 'description' => 'Acesso a serviços administrativos e financeiros', 'is_locked' => true]);
+        $client = Role::firstOrCreate(['name' => 'client'], ['label' => 'Cliente', 'description' => 'Acesso aos serviços contratados', 'is_locked' => true]);
 
         $permissions = [
             ['name' => 'dashboard.view', 'label' => 'Ver Dashboard', 'group' => 'Dashboard'],
@@ -58,7 +58,7 @@ class RolePermissionSeeder extends Seeder
         ];
 
         foreach ($permissions as $perm) {
-            Permission::create($perm);
+            Permission::firstOrCreate(['name' => $perm['name']], $perm);
         }
 
         $adminPermissionNames = array_column($permissions, 'name');
