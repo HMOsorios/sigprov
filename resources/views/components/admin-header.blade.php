@@ -7,6 +7,9 @@
         @php
             $unreadNotifications = \App\Models\Notification::where('user_id', auth()->id())->where('is_read', false)->count();
         @endphp
+        <a href="{{ route('admin.dashboard') }}" class="text-gray-500 hover:text-gray-700 transition" title="Página inicial">
+            <span class="text-xl">🏠</span>
+        </a>
         <a href="{{ route('admin.settings.notifications') }}" class="relative text-gray-500 hover:text-gray-700 transition">
             <span class="text-xl">🔔</span>
             @if($unreadNotifications > 0)
